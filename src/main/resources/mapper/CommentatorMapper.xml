@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guide.dao.CommentatorMapper">
+	<resultMap id="BaseResultMap" type="com.guide.bean.Commentator">
+		<id column="commentator_id" jdbcType="INTEGER" property="commentatorId" />
+		<result column="commentator_name" jdbcType="VARCHAR" property="commentatorName" />
+		<result column="commentator_gender" jdbcType="CHAR"
+			property="commentatorGender" />
+		<result column="commentator_age" jdbcType="INTEGER" property="commentatorAge" />
+		<result column="commentator_record" jdbcType="VARCHAR"
+			property="commentatorRecord" />
+		<result column="commentator_education" jdbcType="VARCHAR"
+			property="commentatorEducation" />
+		<result column="commentator_idcard" jdbcType="VARCHAR"
+			property="commentatorIdcard" />
+		<result column="commentator_province" jdbcType="VARCHAR"
+			property="commentatorProvince" />
+		<result column="commentator_city" jdbcType="VARCHAR" property="commentatorCity" />
+		<result column="commentator_work_place" jdbcType="VARCHAR"
+			property="commentatorWorkPlace" />
+		<result column="commentator_work_position" jdbcType="VARCHAR"
+			property="commentatorWorkPosition" />
+		<result column="commentator_work_year" jdbcType="INTEGER"
+			property="commentatorWorkYear" />
+		<result column="commentator_image_url" jdbcType="VARCHAR"
+			property="commentatorImageUrl" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		commentator_id, commentator_name, commentator_gender, commentator_age,
+		commentator_record,
+		commentator_education, commentator_idcard, commentator_province, commentator_city,
+		commentator_work_place, commentator_work_position,
+		commentator_work_year, commentator_image_url
+	</sql>
+	<select id="selectByExample" parameterType="com.guide.bean.CommentatorExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tb_commentator
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_commentator
+		where commentator_id = #{commentatorId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_commentator
+		where commentator_id = #{commentatorId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.guide.bean.CommentatorExample">
+		delete from tb_commentator
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.guide.bean.Commentator">
+		insert into tb_commentator (commentator_id, commentator_name,
+		commentator_gender,
+		commentator_age, commentator_record, commentator_education,
+		commentator_idcard, commentator_province,
+		commentator_city, commentator_work_place,
+		commentator_work_position, commentator_work_year,
+		commentator_image_url)
+		values (#{commentatorId,jdbcType=INTEGER},
+		#{commentatorName,jdbcType=VARCHAR},
+		#{commentatorGender,jdbcType=CHAR},
+		#{commentatorAge,jdbcType=INTEGER},
+		#{commentatorRecord,jdbcType=VARCHAR},
+		#{commentatorEducation,jdbcType=VARCHAR},
+		#{commentatorIdcard,jdbcType=VARCHAR},
+		#{commentatorProvince,jdbcType=VARCHAR},
+		#{commentatorCity,jdbcType=VARCHAR},
+		#{commentatorWorkPlace,jdbcType=VARCHAR},
+		#{commentatorWorkPosition,jdbcType=VARCHAR},
+		#{commentatorWorkYear,jdbcType=INTEGER},
+		#{commentatorImageUrl,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.guide.bean.Commentator">
+		insert into tb_commentator
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commentatorId != null">
+				commentator_id,
+			</if>
+			<if test="commentatorName != null">
+				commentator_name,
+			</if>
+			<if test="commentatorGender != null">
+				commentator_gender,
+			</if>
+			<if test="commentatorAge != null">
+				commentator_age,
+			</if>
+			<if test="commentatorRecord != null">
+				commentator_record,
+			</if>
+			<if test="commentatorEducation != null">
+				commentator_education,
+			</if>
+			<if test="commentatorIdcard != null">
+				commentator_idcard,
+			</if>
+			<if test="commentatorProvince != null">
+				commentator_province,
+			</if>
+			<if test="commentatorCity != null">
+				commentator_city,
+			</if>
+			<if test="commentatorWorkPlace != null">
+				commentator_work_place,
+			</if>
+			<if test="commentatorWorkPosition != null">
+				commentator_work_position,
+			</if>
+			<if test="commentatorWorkYear != null">
+				commentator_work_year,
+			</if>
+			<if test="commentatorImageUrl != null">
+				commentator_image_url,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commentatorId != null">
+				#{commentatorId,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorName != null">
+				#{commentatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorGender != null">
+				#{commentatorGender,jdbcType=CHAR},
+			</if>
+			<if test="commentatorAge != null">
+				#{commentatorAge,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorRecord != null">
+				#{commentatorRecord,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorEducation != null">
+				#{commentatorEducation,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorIdcard != null">
+				#{commentatorIdcard,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorProvince != null">
+				#{commentatorProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorCity != null">
+				#{commentatorCity,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorWorkPlace != null">
+				#{commentatorWorkPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorWorkPosition != null">
+				#{commentatorWorkPosition,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorWorkYear != null">
+				#{commentatorWorkYear,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorImageUrl != null">
+				#{commentatorImageUrl,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.guide.bean.CommentatorExample"
+		resultType="java.lang.Long">
+		select count(*) from tb_commentator
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tb_commentator
+		<set>
+			<if test="record.commentatorId != null">
+				commentator_id = #{record.commentatorId,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentatorName != null">
+				commentator_name = #{record.commentatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorGender != null">
+				commentator_gender = #{record.commentatorGender,jdbcType=CHAR},
+			</if>
+			<if test="record.commentatorAge != null">
+				commentator_age = #{record.commentatorAge,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentatorRecord != null">
+				commentator_record = #{record.commentatorRecord,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorEducation != null">
+				commentator_education = #{record.commentatorEducation,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorIdcard != null">
+				commentator_idcard = #{record.commentatorIdcard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorProvince != null">
+				commentator_province = #{record.commentatorProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorCity != null">
+				commentator_city = #{record.commentatorCity,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorWorkPlace != null">
+				commentator_work_place = #{record.commentatorWorkPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorWorkPosition != null">
+				commentator_work_position = #{record.commentatorWorkPosition,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorWorkYear != null">
+				commentator_work_year = #{record.commentatorWorkYear,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentatorImageUrl != null">
+				commentator_image_url = #{record.commentatorImageUrl,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tb_commentator
+		set commentator_id = #{record.commentatorId,jdbcType=INTEGER},
+		commentator_name = #{record.commentatorName,jdbcType=VARCHAR},
+		commentator_gender = #{record.commentatorGender,jdbcType=CHAR},
+		commentator_age = #{record.commentatorAge,jdbcType=INTEGER},
+		commentator_record = #{record.commentatorRecord,jdbcType=VARCHAR},
+		commentator_education =
+		#{record.commentatorEducation,jdbcType=VARCHAR},
+		commentator_idcard = #{record.commentatorIdcard,jdbcType=VARCHAR},
+		commentator_province = #{record.commentatorProvince,jdbcType=VARCHAR},
+		commentator_city = #{record.commentatorCity,jdbcType=VARCHAR},
+		commentator_work_place = #{record.commentatorWorkPlace,jdbcType=VARCHAR},
+		commentator_work_position =
+		#{record.commentatorWorkPosition,jdbcType=VARCHAR},
+		commentator_work_year =
+		#{record.commentatorWorkYear,jdbcType=INTEGER},
+		commentator_image_url = #{record.commentatorImageUrl,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.guide.bean.Commentator">
+		update tb_commentator
+		<set>
+			<if test="commentatorName != null">
+				commentator_name = #{commentatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorGender != null">
+				commentator_gender = #{commentatorGender,jdbcType=CHAR},
+			</if>
+			<if test="commentatorAge != null">
+				commentator_age = #{commentatorAge,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorRecord != null">
+				commentator_record = #{commentatorRecord,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorEducation != null">
+				commentator_education = #{commentatorEducation,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorIdcard != null">
+				commentator_idcard = #{commentatorIdcard,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorProvince != null">
+				commentator_province = #{commentatorProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorCity != null">
+				commentator_city = #{commentatorCity,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorWorkPlace != null">
+				commentator_work_place = #{commentatorWorkPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorWorkPosition != null">
+				commentator_work_position = #{commentatorWorkPosition,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorWorkYear != null">
+				commentator_work_year = #{commentatorWorkYear,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorImageUrl != null">
+				commentator_image_url = #{commentatorImageUrl,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where commentator_id = #{commentatorId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.guide.bean.Commentator">
+		update tb_commentator
+		set commentator_name = #{commentatorName,jdbcType=VARCHAR},
+		commentator_gender = #{commentatorGender,jdbcType=CHAR},
+		commentator_age = #{commentatorAge,jdbcType=INTEGER},
+		commentator_record = #{commentatorRecord,jdbcType=VARCHAR},
+		commentator_education = #{commentatorEducation,jdbcType=VARCHAR},
+		commentator_idcard = #{commentatorIdcard,jdbcType=VARCHAR},
+		commentator_province = #{commentatorProvince,jdbcType=VARCHAR},
+		commentator_city = #{commentatorCity,jdbcType=VARCHAR},
+		commentator_work_place = #{commentatorWorkPlace,jdbcType=VARCHAR},
+		commentator_work_position =
+		#{commentatorWorkPosition,jdbcType=VARCHAR},
+		commentator_work_year = #{commentatorWorkYear,jdbcType=INTEGER},
+		commentator_image_url = #{commentatorImageUrl,jdbcType=VARCHAR}
+		where commentator_id = #{commentatorId,jdbcType=INTEGER}
+	</update>
+
+	<!-- List&lt;Commentator&gt; getCommentatorByName(@Param("commentatorName") 
+		String commentatorName); -->
+	<select id="getCommentatorByName" resultMap="BaseResultMap">
+		SELECT *
+		FROM
+		tb_commentator c
+		WHERE c.commentator_name like CONCAT(CONCAT('%', #{commentatorName,jdbcType=VARCHAR}), '%')
+	</select>
+	<select id="getCommentatorByNSCE" resultMap="BaseResultMap" parameterType="com.guide.po.CommentatorSearchPo">
+		SELECT *
+		FROM tb_commentator c
+		WHERE
+			c.commentator_name like CONCAT(CONCAT('%', #{commentatorName,jdbcType=VARCHAR}), '%')
+		<if test="commentatorGender != null and commentatorGender != ''">
+			AND c.commentator_gender = #{commentatorGender,jdbcType=CHAR}
+		</if>
+		<if test="commentatorCity != null and commentatorCity != ''">
+			AND c.commentator_city = #{commentatorCity,jdbcType=VARCHAR}
+		</if>
+		<if test="commentatorEducation != null and commentatorEducation != ''">
+			AND c.commentator_education = #{commentatorEducation,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<resultMap id="CountMap" type="com.guide.bean.Count">
+		<result column="counts" jdbcType="INTEGER" property="counts" />
+		<result column="groups" jdbcType="VARCHAR" property="groups" />
+	</resultMap>
+
+	<select id="selectcount" resultMap="CountMap">
+		SELECT COUNT(*) AS counts,CASE
+		<![CDATA[WHEN commentator_age >=11 AND commentator_age <=20 THEN '20age'
+		WHEN commentator_age >=21 AND commentator_age <=30 THEN '30age'
+		WHEN commentator_age >=31 AND commentator_age <=40 THEN '40age'
+		WHEN commentator_age >=41 AND commentator_age <=50 THEN '50age'
+		WHEN commentator_age >=51 AND commentator_age <=60 THEN '60age'
+		WHEN commentator_age >=61 AND commentator_age <=70 THEN '70age'
+		WHEN commentator_age >=71 AND commentator_age <=80 THEN '80age'
+		ELSE '其他']]>
+		END AS groups
+		FROM tb_commentator
+		GROUP BY CASE
+		<![CDATA[WHEN commentator_age >=11 AND commentator_age <=20 THEN '20age'
+		WHEN commentator_age >=21 AND commentator_age <=30 THEN '30age'
+		WHEN commentator_age >=31 AND commentator_age <=40 THEN '40age'
+		WHEN commentator_age >=41 AND commentator_age <=50 THEN '50age'
+		WHEN commentator_age >=51 AND commentator_age <=60 THEN '60age'
+		WHEN commentator_age >=61 AND commentator_age <=70 THEN '70age'
+		WHEN commentator_age >=71 AND commentator_age <=80 THEN '80age'
+		ELSE '其他']]>
+		END
+	</select>
+	<select id="selectsex" resultMap="CountMap">
+		SELECT COUNT(*) AS counts,CASE
+		<![CDATA[
+		WHEN commentator_gender = 'M'THEN '男'
+		WHEN commentator_gender = 'F'THEN '女'
+		ELSE '其他']]>
+		END AS groups
+		FROM tb_commentator
+		GROUP BY CASE
+		<![CDATA[
+		WHEN commentator_gender = 'M'THEN '男'
+		WHEN commentator_gender = 'F'THEN '女'
+		ELSE '其他']]>
+		END
+	</select>
+	<select id="selectcity" resultMap="CountMap">
+		SELECT COUNT(*) AS counts,CASE
+		<![CDATA[
+		WHEN commentator_city = '南平市'THEN '南平市'
+		WHEN commentator_city = '宁德市'THEN '宁德市'
+		WHEN commentator_city = '三明市'THEN '三明市'
+		WHEN commentator_city = '福州市'THEN '福州市'
+		WHEN commentator_city = '莆田市'THEN '莆田市'
+		WHEN commentator_city = '龙岩市'THEN '龙岩市'
+		WHEN commentator_city = '厦门市'THEN '厦门市'
+		WHEN commentator_city = '漳州市'THEN '漳州市'
+		WHEN commentator_city = '泉州市'THEN '泉州市'
+		ELSE '其他']]>
+		END AS groups
+		FROM tb_commentator
+		GROUP BY CASE
+		<![CDATA[
+		WHEN commentator_city = '南平市'THEN '南平市'
+		WHEN commentator_city = '宁德市'THEN '宁德市'
+		WHEN commentator_city = '三明市'THEN '三明市'
+		WHEN commentator_city = '福州市'THEN '福州市'
+		WHEN commentator_city = '莆田市'THEN '莆田市'
+		WHEN commentator_city = '龙岩市'THEN '龙岩市'
+		WHEN commentator_city = '厦门市'THEN '厦门市'
+		WHEN commentator_city = '漳州市'THEN '漳州市'
+		WHEN commentator_city = '泉州市'THEN '泉州市'
+		ELSE '其他']]>
+		END
+	</select>
+</mapper>

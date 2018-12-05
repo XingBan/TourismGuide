@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guide.dao.CommentatorAwardMapper">
+	<resultMap id="BaseResultMap" type="com.guide.bean.CommentatorAward">
+		<id column="commentator_award_id" jdbcType="INTEGER" property="commentatorAwardId" />
+		<result column="commentator_id" jdbcType="INTEGER" property="commentatorId" />
+		<result column="commentator_award_year" jdbcType="VARCHAR"
+			property="commentatorAwardYear" />
+		<result column="commentator_award_name" jdbcType="VARCHAR"
+			property="commentatorAwardName" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		commentator_award_id, commentator_id, commentator_award_year, commentator_award_name
+	</sql>
+	<select id="selectByExample" parameterType="com.guide.bean.CommentatorAwardExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tb_commentator_award
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_commentator_award
+		where commentator_award_id = #{commentatorAwardId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_commentator_award
+		where commentator_award_id = #{commentatorAwardId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.guide.bean.CommentatorAwardExample">
+		delete from tb_commentator_award
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.guide.bean.CommentatorAward">
+		insert into tb_commentator_award (commentator_award_id, commentator_id,
+		commentator_award_year, commentator_award_name
+		)
+		values (#{commentatorAwardId,jdbcType=INTEGER},
+		#{commentatorId,jdbcType=INTEGER},
+		#{commentatorAwardYear,jdbcType=VARCHAR},
+		#{commentatorAwardName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.guide.bean.CommentatorAward">
+		insert into tb_commentator_award
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commentatorAwardId != null">
+				commentator_award_id,
+			</if>
+			<if test="commentatorId != null">
+				commentator_id,
+			</if>
+			<if test="commentatorAwardYear != null">
+				commentator_award_year,
+			</if>
+			<if test="commentatorAwardName != null">
+				commentator_award_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commentatorAwardId != null">
+				#{commentatorAwardId,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorId != null">
+				#{commentatorId,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorAwardYear != null">
+				#{commentatorAwardYear,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorAwardName != null">
+				#{commentatorAwardName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.guide.bean.CommentatorAwardExample"
+		resultType="java.lang.Long">
+		select count(*) from tb_commentator_award
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tb_commentator_award
+		<set>
+			<if test="record.commentatorAwardId != null">
+				commentator_award_id = #{record.commentatorAwardId,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentatorId != null">
+				commentator_id = #{record.commentatorId,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentatorAwardYear != null">
+				commentator_award_year = #{record.commentatorAwardYear,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentatorAwardName != null">
+				commentator_award_name = #{record.commentatorAwardName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tb_commentator_award
+		set commentator_award_id = #{record.commentatorAwardId,jdbcType=INTEGER},
+		commentator_id = #{record.commentatorId,jdbcType=INTEGER},
+		commentator_award_year =
+		#{record.commentatorAwardYear,jdbcType=VARCHAR},
+		commentator_award_name =
+		#{record.commentatorAwardName,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.guide.bean.CommentatorAward">
+		update tb_commentator_award
+		<set>
+			<if test="commentatorId != null">
+				commentator_id = #{commentatorId,jdbcType=INTEGER},
+			</if>
+			<if test="commentatorAwardYear != null">
+				commentator_award_year = #{commentatorAwardYear,jdbcType=VARCHAR},
+			</if>
+			<if test="commentatorAwardName != null">
+				commentator_award_name = #{commentatorAwardName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where commentator_award_id = #{commentatorAwardId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.guide.bean.CommentatorAward">
+		update tb_commentator_award
+		set commentator_id = #{commentatorId,jdbcType=INTEGER},
+		commentator_award_year = #{commentatorAwardYear,jdbcType=VARCHAR},
+		commentator_award_name = #{commentatorAwardName,jdbcType=VARCHAR}
+		where commentator_award_id = #{commentatorAwardId,jdbcType=INTEGER}
+	</update>
+
+	<!-- List&lt;CommentatorAward&gt; selectCommentatorAwardById(@Param("commentatorId") 
+		Integer commentatorId); -->
+	<select id="selectCommentatorAwardById" resultMap="BaseResultMap">
+		SELECT *
+		FROM
+		tb_commentator_award
+		WHERE commentator_id = #{commentatorId}
+	</select>
+</mapper>

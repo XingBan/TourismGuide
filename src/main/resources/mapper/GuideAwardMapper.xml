@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guide.dao.GuideAwardMapper">
+  <resultMap id="BaseResultMap" type="com.guide.bean.GuideAward">
+    <id column="guide_award_id" jdbcType="INTEGER" property="guideAwardId" />
+    <result column="guide_id" jdbcType="INTEGER" property="guideId" />
+    <result column="guide_award_year" jdbcType="VARCHAR" property="guideAwardYear" />
+    <result column="guide_award_name" jdbcType="VARCHAR" property="guideAwardName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    guide_award_id, guide_id, guide_award_year, guide_award_name
+  </sql>
+  <select id="selectByExample" parameterType="com.guide.bean.GuideAwardExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_guide_award
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_guide_award
+    where guide_award_id = #{guideAwardId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_guide_award
+    where guide_award_id = #{guideAwardId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guide.bean.GuideAwardExample">
+    delete from tb_guide_award
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guide.bean.GuideAward">
+    insert into tb_guide_award (guide_award_id, guide_id, guide_award_year, 
+      guide_award_name)
+    values (#{guideAwardId,jdbcType=INTEGER}, #{guideId,jdbcType=INTEGER}, #{guideAwardYear,jdbcType=VARCHAR}, 
+      #{guideAwardName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guide.bean.GuideAward">
+    insert into tb_guide_award
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="guideAwardId != null">
+        guide_award_id,
+      </if>
+      <if test="guideId != null">
+        guide_id,
+      </if>
+      <if test="guideAwardYear != null">
+        guide_award_year,
+      </if>
+      <if test="guideAwardName != null">
+        guide_award_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="guideAwardId != null">
+        #{guideAwardId,jdbcType=INTEGER},
+      </if>
+      <if test="guideId != null">
+        #{guideId,jdbcType=INTEGER},
+      </if>
+      <if test="guideAwardYear != null">
+        #{guideAwardYear,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAwardName != null">
+        #{guideAwardName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guide.bean.GuideAwardExample" resultType="java.lang.Long">
+    select count(*) from tb_guide_award
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_guide_award
+    <set>
+      <if test="record.guideAwardId != null">
+        guide_award_id = #{record.guideAwardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.guideId != null">
+        guide_id = #{record.guideId,jdbcType=INTEGER},
+      </if>
+      <if test="record.guideAwardYear != null">
+        guide_award_year = #{record.guideAwardYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideAwardName != null">
+        guide_award_name = #{record.guideAwardName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_guide_award
+    set guide_award_id = #{record.guideAwardId,jdbcType=INTEGER},
+      guide_id = #{record.guideId,jdbcType=INTEGER},
+      guide_award_year = #{record.guideAwardYear,jdbcType=VARCHAR},
+      guide_award_name = #{record.guideAwardName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guide.bean.GuideAward">
+    update tb_guide_award
+    <set>
+      <if test="guideId != null">
+        guide_id = #{guideId,jdbcType=INTEGER},
+      </if>
+      <if test="guideAwardYear != null">
+        guide_award_year = #{guideAwardYear,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAwardName != null">
+        guide_award_name = #{guideAwardName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where guide_award_id = #{guideAwardId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guide.bean.GuideAward">
+    update tb_guide_award
+    set guide_id = #{guideId,jdbcType=INTEGER},
+      guide_award_year = #{guideAwardYear,jdbcType=VARCHAR},
+      guide_award_name = #{guideAwardName,jdbcType=VARCHAR}
+    where guide_award_id = #{guideAwardId,jdbcType=INTEGER}
+  </update>
+	
+	<!-- List&lt;GuideAward&gt; selectGuideAwardById(@Param("guideId") Integer guideId); -->
+	<select id="selectGuideAwardById" resultMap="BaseResultMap">
+		SELECT *
+		FROM tb_guide_award
+		WHERE guide_id = #{guideId}
+	</select>
+</mapper>
